@@ -3,7 +3,8 @@ package com.suproject.supj.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.suproject.supj.dao.MemberDAO;
@@ -12,13 +13,15 @@ import com.suproject.supj.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-
 public class HomeController {
 	
 	@Autowired
 	private HttpSession session;
 	
-	@RequestMapping("/")
+	@Autowired
+	private MemberDAO dao;
+	
+	@GetMapping("/")
 	 public String index() {
 		
 		
@@ -26,10 +29,10 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping("idCheck")
+	@PostMapping("idCheck")
 	@ResponseBody
-	 public boolean idCheck(String id) {
-			MemberDAO dao = new MemberDAO();
+	 public boolean idCheck(String id) throws Exception{
+			//MemberDAO dao = new MemberDAO();
 			System.out.println("컨트롤러"+id);
 			boolean result = dao.idCheck(id);
 			
@@ -40,7 +43,7 @@ public class HomeController {
 		return result;
 	}
 	
-	@RequestMapping("register")
+	@GetMapping("register")
 	 public String register() {
 		
 		
@@ -48,10 +51,9 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping("registMember")
+	@GetMapping("registMember")
 	 public String registMember(String id,String pw) {
 		MemberDTO mem = new MemberDTO();	
-		MemberDAO dao = new MemberDAO();
 		
 		mem.setId(id);
 		mem.setPw(pw);

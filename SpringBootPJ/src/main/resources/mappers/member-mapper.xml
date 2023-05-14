@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="member">
+<mapper namespace="Member">
 	
-	<select resultType="Integer" id="idcheck">
+	<select resultType="Integer" id="idCheck">
 		select count(*) from member where mem_id = #{value}
 	</select>
 
 	
-	<select resultType="osf.spring.dto.MemberDTO" id="mypage">select *from
-		member where id=#{value}
-	</select>
+
 </mapper>
 
