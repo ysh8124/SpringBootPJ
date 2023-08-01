@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="member">
+
+<mapper namespace="Member">
 	
-	<select resultType="Integer" id="idcheck">
+	<select resultType="Integer" id="idCheck">
 		select count(*) from member where mem_id = #{value}
 	</select>
 
+	<insert id="insertMember">
+		insert into member (mem_no,mem_id,mem_pw,nickname) values(member_seq.nextval,#{id},#{pw},#{nickname})
+	</insert>
 	
-	<select resultType="osf.spring.dto.MemberDTO" id="mypage">select *from
-		member where id=#{value}
+	<select resultType="Integer" id="doLogin" parameterType="java.util.Map">
+		select count(*) from member where mem_id = #{id} and mem_pw = #{pw}
+	</select>
+
+
+	<insert id="addPost" parameterType="java.util.Map">
+		insert into post (seq,title,writer,content) values(post_seq.nextval,#{title},#{writer},#{content})
+	</insert>
+	
+	<select resultType="com.suproject.supj.dto.PostDTO" id="selectPost">
+		select * from post
 	</select>
 </mapper>
 

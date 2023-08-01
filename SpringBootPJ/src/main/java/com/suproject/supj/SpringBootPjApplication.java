@@ -1,7 +1,9 @@
 package com.suproject.supj;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 @SpringBootApplication
 public class SpringBootPjApplication {
@@ -10,4 +12,7 @@ public class SpringBootPjApplication {
 		SpringApplication.run(SpringBootPjApplication.class, args);
 	}
 
+	
+
+	
 }
