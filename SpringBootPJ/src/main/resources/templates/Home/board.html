@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <style>
         *{box-sizing: border-box}
         div{border: 0.px solid black}
 
 
-        /*    모든 영역*/
+
         #container{height: 1500px;margin: auto;}
 
 
@@ -22,28 +23,17 @@
             border-bottom: 1px solid #3e3e3e;
         }
 
-        /*    중앙 내용*/
-        #contents{float: left; width: 1212px; height: 1500px; margin-left: 56vh; margin-top: 0; font-size: 13px;}
+
+        #contents{float: left; width: 1212px; height: 1500px; margin-left: 50vh; margin-top: 0; font-size: 13px;}
         #notice{margin-top: 20vh;}
 
-        #product_ul{list-style: none; display: table;}
-        #product_info{list-style: none; font-size: 12px;}
         .box_div img{width: 375px; height: 400px; padding: 8px}
 
         .box_div img:hover{opacity: 50%}
 
         .box_li {float: left;}
 
-        /*    오른쪽 메뉴*/
-        #rightmenu{float:left; width: 250px; position: fixed; right:130px; padding: 49px 80px 0px 0px; text-align: right;}
-        #rightmenu ul li{
-            text-decoration: none; 
-            color: black; 
-            display: inline-block;
-            margin: 0px 0px 5px 0;
-            font-size: 11px;
-            text-transform: uppercase;                     
-        }
+
 
 
          .nheader{
@@ -65,7 +55,7 @@
 	 	 #n_hover:hover{
 	 	 opacity: 50%;
 	     }
-	     #back{
+	     #create{
 	     border: 1px solid #c4c4c4; background-color: rgba(266,266,266,0); color: #c4c4c4; padding: 5px;
 	     }
 	     #back:hover{
@@ -97,28 +87,40 @@
                  <!--               중앙 내용-->
                 <form action="../notice/modify" method="post">
                 <div id="contents">
-                <div id = "notice">Notice</div>
+                <div id = "notice">community</div>
                 <div style="width: 1050px;">
                 <div class="nheader" style="width: 5%; border-right: 0.5px solid #eeeeee;">글번호</div>
-                <input type="hidden" value="${result.n_seq}" name="n_seq">
+                <input type="hidden" value="${list.seq}" name="n_seq">
                 <div class="nheader" style="width: 60%; border-right: 0.5px solid #eeeeee;">제목</div>
                 <div class="nheader" style="width: 10%; border-right: 0.5px solid #eeeeee;">작성자</div>
-                <input type="hidden" value="${result.writer}" name="writer">
+                <input type="hidden" value="${list.writer}" name="writer">
                 <div class="nheader" style="width: 15%; border-right: 0.5px solid #eeeeee;">작성일</div>
                 <div class="nheader" style="width: 10%;"> 내용</div>
                 <input type="hidden" value="${page}" name="page">
                 </div>
+		
+				
                 <div style="width: 1050px;">
-                <div style="height: 70px;"></div>
+                <div style="height: 50px;"></div>
                 </div>
                 <div style="width: 1050px; border-right: 0.5px solid #fdfdfd;">
-                <div class="ncontents" style="width: 100%;"><c:out value="${result.contents}" escapeXml="false"></c:out></div>
+                <div class="ncontents" style="width: 100%;">
+                	<tr th:each="list : ${list}">
+                	<div class="posts" >
+						<td th:text="${list.seq}" class="seq"></td>
+						<td th:text="${list.title}" class="title"></td>
+						<td th:text="${list.content}" class="content"></td>
+						<td th:text="${list.writer}" class="writer"></td>
+						<td th:text="${list.write_date}" class="write_date"></td>
+						</div>
+					</tr>					
+				</div>
                 </div>
                 <div style="width: 1050px; margin-top: 30px;">
-        		<div style="width: 100%; text-align: right; border-right: 1px solid #fdfdfd;"><input type="button" id="dbtn" value="삭제하기">&nbsp;&nbsp;<input type="submit" id="modify" value="수정하기">&nbsp;&nbsp;<input type="button" id="back" value="뒤로가기"></div>
+        		<div style="width: 100%; text-align: right; border-right: 1px solid #fdfdfd;"><input type="button" id="dbtn" value="삭제하기">&nbsp;&nbsp;<input type="submit" id="modify" value="수정하기">&nbsp;&nbsp;<input type="button" id="create" value="등록하기" onclick="location.href='goWrite'"></div>
                 </div>	
                 <div style="width: 1050px; margin-top: 30px;">
-                <div style="width: 100%; text-align: right; border-right: 1px solid #fdfdfd;"><input type="button" id="home" value="홈으로"></div>	
+                <div style="width: 100%; text-align: right; border-right: 1px solid #fdfdfd;"><input type="button" id="home" value="홈으로" onclick="location.href='/'"></div>	
                 </div>
                 
                

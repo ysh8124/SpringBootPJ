@@ -136,25 +136,22 @@ body {
 <body>
 	<div class="container">
 		<div id="box">
-		<form action="doJoin" method="POST" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
+		<form action=registMember id="registForm" method="POST" class="joinForm">
                                                                                                
       <h2>회원가입</h2>
       <div class="textForm">
-        <input name="loginId" type="text" class="id" id="id_val" placeholder="아이디" oninput="this.value = this.value.replace(/[^0-9^A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"><button id="id_btn" type = "button">중복확인</button>
+        <input name="loginId" type="text" class="id" id="id_val" placeholder="아이디" oninput="this.value = this.value.replace(/[^0-9^A-Za-z]/g, '').replace(/(\..*)\./g, '$1');"><button id="id_btn" type = "button" style="background-color:LightSalmon;color:white;border:0px;">중복체크</button>
       </div>
       <div class="textForm">
-        <input name="loginPw" type="password" class="pw" placeholder="비밀번호">
+        <input name="loginPw" type="password" class="pw" id="password" placeholder="비밀번호">
       </div>
        <div class="textForm">
-        <input name="loginPwConfirm" type="password" class="pw" placeholder="비밀번호 확인">
+        <input name="loginPwConfirm" type="password" class="pw" id="password2" placeholder="비밀번호 확인">
       </div>
       <div class="textForm">
-        <input name="nickname" type="password" class="name" placeholder="닉네임">
+        <input name="nickname" type="password" class="name" placeholder="닉네임(미입력시 아이디)">
       </div>
-       <div class="textForm">
-        <input name="email" type="text" class="email" placeholder="이메일">
-      </div>
-      <input type="submit" class="btn" value="J O I N"/>
+      <input type="submit" class="btn" value="J O I N" id="signup"/>
     </form>
 		</div>
 	</div>
@@ -162,20 +159,104 @@ body {
 <script>
 $(function(){
 	
+	var idcheck = false;
+	var id;
+	
 	$("#id_btn").click(function(){
 		  $.ajax({
 		          type: 'post'
 		        , url: '/idCheck'
 		        , data:{"id": $("#id_val").val()}
 		        , success: function(data) {
-		        	if(data == true){alert("사용 가능한 아이디입니다.");}
-		        	else{alert("사용 불가한 아이디입니다.");}
+		        	if(data == true && $("#id_val").val() != ''){
+		        		alert("사용 가능한 아이디입니다."); 
+		        		idcheck = true;
+		        		id = $("#id_val").val();
+		        		$("#id_btn").html('사용가능');
+		        		$("#id_btn").css('background-color','LightGreen');
+		        		$("#id_btn").css('color','white');
+		        	}
+		        	else{alert("사용 불가한 아이디입니다."); idcheck = false;}
 		          },error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
-							alert("실패임");
+							alert("작업에 실패하였습니다.");
 		        	  }
 		  });	
 	});
 	
+	$("#id_val").focusout(function(){
+		console.log(id);
+		if(idcheck == true && id != $("#id_val").val()){
+		idcheck = false;
+		alert("중복체크를 다시 진행하여야 합니다.");
+		$("#id_btn").html("중복체크");
+		$("#id_btn").css('background-color','LightSalmon');
+		$("#id_btn").css('color','white');
+		}else{return false;}
+		
+	});
+	
+	$("#password").focusout(function(){
+		 var pw = $("#password").val();
+		 var pw2 = $("#password2").val();
+		 var num = pw.search(/[0-9]/g);
+		 var eng = pw.search(/[a-z]/ig);
+		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+		 
+		 if(pw.length == 0 && pw2.length > 0){
+			 alert("비밀번호를 먼저 입력해주세요."); 
+		 	$("#password2").val('');
+		 	return false;}
+		 
+	$("#password2").focusout(function(){
+		var pw = $("#password").val();
+		var pw2 = $("#password2").val();
+		
+		if(pw != pw2 && pw2 != ''){alert('비밀번호가 일치하지 않습니다.');
+			$("#password2").val('');
+			return false;
+		}
+	})
+	
+		 
+if(pw.length > 0){
+		 if((pw.length < 8 && pw.length > 0) || (pw.length > 20)){
+
+		  alert("8자리 ~ 20자리 이내로 입력해주세요.");
+		  $("#password").val('');
+		  $("#password2").val('');
+		  return false;
+		 }else if(pw.search(/\s/) != -1){
+		  alert("비밀번호는 공백 없이 입력해주세요.");
+		  $("#password").val('');
+		  $("#password2").val('');
+		  return false;
+		 }else if(num < 0 || eng < 0 || spe < 0 ){
+		  alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+		  $("#password").val('');
+		  $("#password2").val('');
+		  return false;
+		 }else {
+			console.log("통과"); 
+		    return true;
+		 }
+}else{return false;}
+	})
+	
+$("#signup").click(function(){
+	
+	console.log($("#id_btn").html());
+	console.log($("#password").val());
+	console.log($("#password2").val());
+	if($("#id_btn").html() == "사용가능" && $("#password").val() == $("#password2").val() && $("#password").val() != ""){
+			alert("회원가입이 완료되었습니다.");
+			
+		}else if($("#id_btn").html() == "중복체크"){alert("중복체크를 진행하여 주세요."); return false;}
+		else if($("#password").val() != $("#password2").val()){alert("비밀번호가 일치하지 않습니다."); $("#password2").val(''); return false;}
+		else if($("#password").val() == ""){alert("비밀번호를 입력하여주세요."); return false;}
+		else{ 
+			alert("작업에 실패하였습니다."); return false;}
+})
+
 	
 })
 </script>
