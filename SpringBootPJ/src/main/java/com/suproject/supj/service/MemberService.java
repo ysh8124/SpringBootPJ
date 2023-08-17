@@ -35,7 +35,7 @@ public class MemberService {
 	
 	public boolean idCheck(String id) {
 		try {
-			return dao.idCheck(id);
+			return dao.IdCheck(id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

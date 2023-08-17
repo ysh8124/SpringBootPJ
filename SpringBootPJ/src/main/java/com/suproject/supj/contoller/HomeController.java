@@ -44,9 +44,9 @@ public class HomeController {
 	
 	@PostMapping("idCheck")
 	@ResponseBody
-	 public boolean idCheck(String id) throws Exception{
+	 public boolean IdCheck(String id) throws Exception{
 
-			boolean result = dao.idCheck(id);
+			boolean result = dao.IdCheck(id);
 			
 
 			session.setAttribute(id, result);
@@ -56,7 +56,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("register")
-	 public String register() {
+	 public String Register() {
 		
 		
 		return "Home/register";
@@ -64,7 +64,7 @@ public class HomeController {
 	}
 	
 	@PostMapping("registMember")
-	 public String registMember(String loginId,String loginPw,String nickname) {
+	 public String RegistMember(String loginId,String loginPw,String nickname) {
 		MemberDTO mem = new MemberDTO();
 		if(nickname.contentEquals("")){nickname = loginId;}
 		mem.setId(loginId);
@@ -72,7 +72,7 @@ public class HomeController {
 		mem.setNickname(nickname);
 		
 		
-		boolean result = dao.registMember(mem);
+		boolean result = dao.RegistMember(mem);
 		
 		System.out.println(result);
 			
@@ -81,19 +81,19 @@ public class HomeController {
 	
 	
 	@PostMapping("login")
-	public String login(Model model,String id,String pw) {
+	public String Login(Model model,String id,String pw) {
 		return "Home/login";
 	}
 	
 	@PostMapping("doLogin")
 	@ResponseBody
-	public boolean doLogin(Model model,String id,String pw) {
+	public boolean DoLogin(Model model,String id,String pw) {
 		Map<String,String> param = new HashMap<>();
 		String pw2 = mservice.sha512(pw);
 		
 		param.put("id",id);
 		param.put("pw",pw2);
-		boolean check = dao.doLogin(param);
+		boolean check = dao.DoLogin(param);
 		
 		if(check == true) {session.setAttribute("id", id);}
 		
@@ -101,7 +101,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("goBoard")
-	public String goBoard(PagingDTO paging,Model model, @RequestParam(value="nowPage", required=false)String nowPage
+	public String GoBoard(PagingDTO paging,Model model, @RequestParam(value="nowPage", required=false)String nowPage
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage,
 			@RequestParam(value="kind", required=false)String kind,
 			@RequestParam(value="need", required=false)String need){
@@ -109,7 +109,7 @@ public class HomeController {
 
 		
 		int total = 1;
-		total = dao.totalPost();
+		total = dao.TotalPost();
 		
 
 		if (nowPage == null && cntPerPage == null) {
@@ -127,7 +127,7 @@ public class HomeController {
 		
 		paging = new PagingDTO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage),kind,need);
 		model.addAttribute("paging", paging);
-		List<PostDTO> list = dao.selectPost(paging);
+		List<PostDTO> list = dao.SelectPost(paging);
 		model.addAttribute("list",list);
 		
 		if(session.getAttribute("id") == null) {return "Home/Login";}
@@ -135,27 +135,27 @@ public class HomeController {
 	}
 	
 	@GetMapping("goWrite")
-	public String goWrite() {
+	public String GoWrite() {
 		
 		return "Home/write";
 	}
 	
 	@PostMapping("addPost")
-	public String addPost(String title, String content) {
+	public String AddPost(String title, String content) {
 		Map<String,String> param = new HashMap<>();
 		
 		param.put("title", title);
 		param.put("content", content);
 		param.put("writer", (String) session.getAttribute("id"));
 		
-		boolean check = dao.addPost(param);
+		boolean check = dao.AddPost(param);
 		if(check == true) {return "redirect:goBoard";}
 		else{return "Home/write";}
 	}
 	
 	@GetMapping("postView")
-	public String postView(Model model, int seq) {
-			PostDTO post=dao.postView(seq);
+	public String PostView(Model model, int seq) {
+			PostDTO post=dao.PostView(seq);
 			model.addAttribute("post",post);
 			model.addAttribute("user",session.getAttribute("id"));
 			
@@ -163,35 +163,35 @@ public class HomeController {
 	}
 	
 	@GetMapping("goModify")
-	public String goModify(Model model,int seq){
-			PostDTO post = dao.postView(seq);
+	public String GoModify(Model model,int seq){
+			PostDTO post = dao.PostView(seq);
 			model.addAttribute("post",post);
 			
 		return "Home/modify";
 	}
 	
 	@PostMapping("postModify")
-	public String postModify(Model model,String seq, String title, String content) {
+	public String PostModify(Model model,String seq, String title, String content) {
 		Map<String,String> param = new HashMap<>();
 		param.put("seq", seq);
 		param.put("title",title);
 		param.put("content", content);
 		System.out.println(seq+title+content);
 		
-		dao.postModify(param);
+		dao.PostModify(param);
 		
 		return "redirect:goBoard";
 	}
 	
 	@GetMapping("deletePost")
-	public String postDelete(int seq) {
-		dao.postDelete(seq);
+	public String PostDelete(int seq) {
+		dao.PostDelete(seq);
 		
 		return "redirect:goBoard";
 	}
 	
 	@GetMapping("logout")
-	public String logout() {
+	public String Logout() {
 		System.out.println("?");
 		session.invalidate();
 		

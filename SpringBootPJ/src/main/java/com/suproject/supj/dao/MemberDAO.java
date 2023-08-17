@@ -19,7 +19,7 @@ public class MemberDAO {
 	SqlSessionTemplate mybatis;
 	
 
-		public boolean idCheck(String id) {
+		public boolean IdCheck(String id) {
 			int result = mybatis.selectOne("Member.idCheck",id);
 			System.out.println(result);
 			
@@ -29,13 +29,13 @@ public class MemberDAO {
 			
 		}
 
-		public boolean registMember(MemberDTO mem) {
+		public boolean RegistMember(MemberDTO mem) {
 			int result = mybatis.insert("Member.insertMember",mem);
 			if(result>0) {return true;}
 			else {return false;}
 		}
 	
-		public boolean doLogin(Map<String,String> param) {
+		public boolean DoLogin(Map<String,String> param) {
 			
 			int result = mybatis.selectOne("Member.doLogin",param);
 			
@@ -44,7 +44,7 @@ public class MemberDAO {
 			}else {return false;}
 		}
 		
-		public boolean addPost(Map<String,String> param) {
+		public boolean AddPost(Map<String,String> param) {
 			
 			int result = mybatis.insert("Member.addPost",param);
 			
@@ -53,29 +53,29 @@ public class MemberDAO {
 			}else {return false;}
 		}
 		
-		public int totalPost() {
+		public int TotalPost() {
 			int total = mybatis.selectOne("Member.totalPost");
 			
 			return total;
 		}
 		
-		public List<PostDTO> selectPost(PagingDTO paging){
+		public List<PostDTO> SelectPost(PagingDTO paging){
 			List<PostDTO> list = mybatis.selectList("Member.selectPost",paging);
 			System.out.println(paging.getKind());			
 			
 			return list;
 		}
 		
-		public PostDTO postView(int seq) {
+		public PostDTO PostView(int seq) {
 			return mybatis.selectOne("Member.postView",seq);
 		}
 		
-		public int postModify(Map<String,String> param) {
+		public int PostModify(Map<String,String> param) {
 		    
 			return mybatis.update("Member.postModify",param);
 		}
 		
-		public int postDelete(int seq) {
+		public int PostDelete(int seq) {
 			return mybatis.delete("postDelete",seq);
 		}
 		
