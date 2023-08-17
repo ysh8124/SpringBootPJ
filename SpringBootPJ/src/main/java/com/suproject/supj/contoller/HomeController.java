@@ -33,9 +33,6 @@ public class HomeController {
 	@Autowired
 	private MemberService mservice;
 	
-	@Autowired
-	private MemberDTO mem;
-	
 	
 	@GetMapping("/")
 	 public String Index() {
@@ -68,12 +65,12 @@ public class HomeController {
 	
 	@PostMapping("registMember")
 	 public String RegistMember(String loginId,String loginPw,String nickname) {
+		MemberDTO mem = new MemberDTO();
 		if(nickname.contentEquals("")){nickname = loginId;}
 		mem.setId(loginId);
 		mem.setPw(mservice.sha512(loginPw));
 		mem.setNickname(nickname);
-		
-		
+
 			
 		return "Home/index";
 	}
