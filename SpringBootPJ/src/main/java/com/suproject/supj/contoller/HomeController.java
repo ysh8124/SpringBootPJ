@@ -45,10 +45,10 @@ public class HomeController {
 	@PostMapping("idCheck")
 	@ResponseBody
 	 public boolean idCheck(String id) throws Exception{
-			System.out.println("컨트롤러"+id);
+
 			boolean result = dao.idCheck(id);
 			
-			System.out.println(result+"나왔니?");
+
 			session.setAttribute(id, result);
 			
 		
@@ -106,7 +106,7 @@ public class HomeController {
 			@RequestParam(value="kind", required=false)String kind,
 			@RequestParam(value="need", required=false)String need){
 		
-		System.out.println("들어옴?");
+
 		
 		int total = 1;
 		total = dao.totalPost();
