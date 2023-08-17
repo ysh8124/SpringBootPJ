@@ -17,11 +17,10 @@ public class MemberDAO {
 	
 	@Autowired
 	SqlSessionTemplate mybatis;
-	
 
 		public boolean IdCheck(String id) {
 			int result = mybatis.selectOne("Member.idCheck",id);
-			System.out.println(result);
+
 			
 			if(result > 0) {
 				return false;
@@ -61,7 +60,7 @@ public class MemberDAO {
 		
 		public List<PostDTO> SelectPost(PagingDTO paging){
 			List<PostDTO> list = mybatis.selectList("Member.selectPost",paging);
-			System.out.println(paging.GetKind());			
+		
 			
 			return list;
 		}

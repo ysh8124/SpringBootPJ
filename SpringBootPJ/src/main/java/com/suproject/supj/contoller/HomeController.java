@@ -33,9 +33,12 @@ public class HomeController {
 	@Autowired
 	private MemberService mservice;
 	
+	@Autowired
+	private MemberDTO mem;
+	
 	
 	@GetMapping("/")
-	 public String index() {
+	 public String Index() {
 		
 		
 		return "Home/index";
@@ -65,16 +68,12 @@ public class HomeController {
 	
 	@PostMapping("registMember")
 	 public String RegistMember(String loginId,String loginPw,String nickname) {
-		MemberDTO mem = new MemberDTO();
 		if(nickname.contentEquals("")){nickname = loginId;}
 		mem.setId(loginId);
 		mem.setPw(mservice.sha512(loginPw));
 		mem.setNickname(nickname);
 		
 		
-		boolean result = dao.RegistMember(mem);
-		
-		System.out.println(result);
 			
 		return "Home/index";
 	}
@@ -175,8 +174,6 @@ public class HomeController {
 		Map<String,String> param = new HashMap<>();
 		param.put("seq", seq);
 		param.put("title",title);
-		param.put("content", content);
-		System.out.println(seq+title+content);
 		
 		dao.PostModify(param);
 		
@@ -192,7 +189,7 @@ public class HomeController {
 	
 	@GetMapping("logout")
 	public String Logout() {
-		System.out.println("?");
+
 		session.invalidate();
 		
 		return "Home/index";
