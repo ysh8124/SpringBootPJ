@@ -20,8 +20,41 @@
 		insert into post (seq,title,writer,content) values(post_seq.nextval,#{title},#{writer},#{content})
 	</insert>
 	
-	<select resultType="com.suproject.supj.dto.PostDTO" id="selectPost">
-		select * from post
+	<select id="totalPost" resultType="integer">
+		select count(*) from post
 	</select>
+	
+	<select resultType="com.suproject.supj.dto.PostDTO" id="selectPost">
+		SELECT * 
+		FROM (
+			SELECT ROWNUM RN, A.* 
+				FROM (
+						SELECT * 
+						FROM POST 
+						<choose>
+						<when test="kind == 'pTitle'">where title like '%'||#{need}||'%'</when>
+						<when test="kind == 'pWriter'">where writer like '%'||#{need}||'%'</when>
+						</choose>
+						ORDER BY SEQ DESC 
+						) A
+				)
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="postView" resultType="com.suproject.supj.dto.PostDTO">
+		select * from post where seq = #{value}
+	</select>
+	
+	<update id="postModify" parameterType="java.util.Map">
+		update post
+			set title = #{title}, content=#{content}
+			where seq = #{seq}
+	</update>
+	
+	<delete id="postDelete">
+		delete from post
+		where seq = #{seq}
+	</delete>
+
 </mapper>
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.suproject.supj.dto.MemberDTO;
+import com.suproject.supj.dto.PagingDTO;
 import com.suproject.supj.dto.PostDTO;
 
 
@@ -16,6 +17,7 @@ public class MemberDAO {
 	
 	@Autowired
 	SqlSessionTemplate mybatis;
+	
 
 		public boolean idCheck(String id) {
 			int result = mybatis.selectOne("Member.idCheck",id);
@@ -51,8 +53,30 @@ public class MemberDAO {
 			}else {return false;}
 		}
 		
-		public List<PostDTO> selectPost(){
-			return mybatis.selectList("selectPost");
+		public int totalPost() {
+			int total = mybatis.selectOne("Member.totalPost");
+			
+			return total;
+		}
+		
+		public List<PostDTO> selectPost(PagingDTO paging){
+			List<PostDTO> list = mybatis.selectList("Member.selectPost",paging);
+			System.out.println(paging.getKind());			
+			
+			return list;
+		}
+		
+		public PostDTO postView(int seq) {
+			return mybatis.selectOne("Member.postView",seq);
+		}
+		
+		public int postModify(Map<String,String> param) {
+		    
+			return mybatis.update("Member.postModify",param);
+		}
+		
+		public int postDelete(int seq) {
+			return mybatis.delete("postDelete",seq);
 		}
 		
 }

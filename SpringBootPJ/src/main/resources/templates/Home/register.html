@@ -149,7 +149,7 @@ body {
         <input name="loginPwConfirm" type="password" class="pw" id="password2" placeholder="비밀번호 확인">
       </div>
       <div class="textForm">
-        <input name="nickname" type="password" class="name" placeholder="닉네임(미입력시 아이디)">
+        <input name="nickname" type="text" class="name" placeholder="닉네임(미입력시 아이디)">
       </div>
       <input type="submit" class="btn" value="J O I N" id="signup"/>
     </form>
@@ -168,7 +168,7 @@ $(function(){
 		        , url: '/idCheck'
 		        , data:{"id": $("#id_val").val()}
 		        , success: function(data) {
-		        	if(data == true && $("#id_val").val() != ''){
+		        	if(data == true && $("#id_val").val() != '' && $("#id_val").val().length > 5){
 		        		alert("사용 가능한 아이디입니다."); 
 		        		idcheck = true;
 		        		id = $("#id_val").val();
@@ -176,7 +176,7 @@ $(function(){
 		        		$("#id_btn").css('background-color','LightGreen');
 		        		$("#id_btn").css('color','white');
 		        	}
-		        	else{alert("사용 불가한 아이디입니다."); idcheck = false;}
+		        	else{alert("사용 불가한 아이디입니다. 아이디는 6자리 이상부터 가능합니다."); idcheck = false;}
 		          },error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
 							alert("작업에 실패하였습니다.");
 		        	  }
