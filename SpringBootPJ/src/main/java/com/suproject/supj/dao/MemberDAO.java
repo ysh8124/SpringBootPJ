@@ -61,7 +61,7 @@ public class MemberDAO {
 		
 		public List<PostDTO> SelectPost(PagingDTO paging){
 			List<PostDTO> list = mybatis.selectList("Member.selectPost",paging);
-			System.out.println(paging.getKind());			
+			System.out.println(paging.GetKind());			
 			
 			return list;
 		}
