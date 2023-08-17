@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+	.containner{width: 1050px;  margin:auto; margin-top: 10%;
+	border: 1px solid #c4c4c4; background-color: rgba(266,266,266,0); padding: 5px;}
+	
+	#title{border: 1px solid #c4c4c4; background-color: rgba(266,266,266,0); padding: 5px;}
+	#content{border: 1px solid #c4c4c4; background-color: rgba(266,266,266,0); padding: 5px; margin-top: 1%; height: 400px;}
+	#info{margin-top: 1%;}
+	.btn {border: 1px solid #c4c4c4; background-color: rgba(266,266,266,0); color: #c4c4c4; padding: 5px;}
+	.btn:hover{opacity: 50%;
+	 	 cursor: pointer;}
+</style>
+<body>
+	<div class="containner">
+		<div id="title"><h3>[[${post.title}]]</h3></div>
+		<div id="info">작성자: [[${post.writer}]]</div><div>작성일자: [[${post.write_date}]]</div>
+		<div id="content"><span class="text-dark mb-0" th:utext="${post.content}"></span></div>
+		
+
+		<div style="float: left; margin-top: 10px;">
+		<input type="button" value="수정" class="btn" id="alterBtn" th:onclick="|location.href='@{/goModify(seq=${post.seq})}'|" th:if="${post.writer} == ${user}"> 
+		<input type="button" class="btn" value="삭제" id="deleteBtn" onclick="deletePost()" th:if="${post.writer} == ${user}">
+		</div>
+		
+		<div style="text-align: right; width: 100%; margin-top: 10px;">
+								<input type="button" value="뒤로가기" class="btn" id="back" onclick="history.back()">
+							</div>
+	</div>
+	
+
+	
+	<script>
+		function deletePost(){
+			if(confirm("글을 삭제하시겠습니까?")){
+				location.href="deletePost?seq=[[${post.seq}]]";
+				alert("글이 삭제되었습니다.");
+			}else{return false;}
+			
+		}
+	</script>
+</body>
+</html>

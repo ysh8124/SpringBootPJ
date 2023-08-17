@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script type="text/javascript"> 
+   history.replaceState({}, null, location.pathname); 
+</script> 
+  <title>SummerNoteExample</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <!-- 서머노트를 위해 추가해야할 부분 -->
+  <script src="/resources/js/summernote-lite.js"></script>
+  <script src="/resources/js/summernote-ko-KR.js"></script>
+  <link rel="stylesheet" href="/resources/css/summernote-lite.css">
+  <!--  -->
+  
+  <style>
+  #btn {
+	border: 1px solid #c4c4c4;
+	background-color: rgba(266, 266, 266, 0);
+	color: #c4c4c4;
+	padding: 5px;
+	width: 50px;
+}
+
+#back {	
+	border: 1px solid #c4c4c4;
+	background-color: rgba(266, 266, 266, 0);
+	color: #c4c4c4;
+	padding: 5px;
+}</style>
+  
+</head>
+<body>
+
+
+<div class="container" style="margin-top: 10%;">
+	<form action="addPost" method="post" onsubmit="return formSubmit()">
+		<div class="title"><input type="text" name="title" style="width:100%;margin-bottom: 10px;" placeholder="제목을 입력해주세요." id="title"></div>
+ 			 <textarea class="summernote" name="content" id="content" escapeXml="false"></textarea>
+ 			 <div style="text-align: right; width: 100%; margin-top: 10px;">
+								<input type="submit" value="전송" id="btn">&nbsp;&nbsp;<input
+									type="button" value="뒤로가기" id="back" onclick="history.back()">
+							</div>
+  </form>    
+</div>
+
+
+<script>
+$('.summernote').summernote({
+	placeholder: '본문을 적어주세요',
+	  height: 450,
+	  minHeight: null,             // set minimum height of editor
+      maxHeight: null,             // set maximum height of editor
+      focus: true      ,            // set focus to editable area after initializing summernote
+	  lang: "ko-KR",
+	  disableResizeEditor : true,
+	  toolbar: [
+	  	    // [groupName, [list of button]]
+	  	    ['style', ['bold', 'italic', 'underline', 'clear']],
+	  	    ['font', ['strikethrough', 'superscript', 'subscript']],
+	  	    ['fontsize', ['fontsize']],
+	  	    ['color', ['color']],
+	  	    ['para', ['ul', 'ol', 'paragraph']],
+	  	    ['height', ['height']]
+	  	  ]
+	});
+	
+function formSubmit(){
+	var title = $("#title").val();
+	var content = $("#content").val();
+	
+	
+	
+	
+	if(title == ""){
+		alert("제목을 입력해주세요");
+		return false;
+	}
+	
+	if(content == "<p><br></p>" || content==""){
+		alert("본문을 입력해주세요");
+		return false;
+	}else{
+		alert("글 작성이 완료되었습니다.");
+		return true;
+	}
+	
+}
+	
+</script>
+</body>
+</html>
