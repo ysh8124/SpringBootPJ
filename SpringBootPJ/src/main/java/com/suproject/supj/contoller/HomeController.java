@@ -172,6 +172,7 @@ public class HomeController {
 		Map<String,String> param = new HashMap<>();
 		param.put("seq", seq);
 		param.put("title",title);
+		param.put("content", content);
 		
 		dao.PostModify(param);
 		
