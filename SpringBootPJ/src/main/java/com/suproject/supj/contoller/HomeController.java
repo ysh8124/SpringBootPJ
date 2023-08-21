@@ -71,6 +71,7 @@ public class HomeController {
 		mem.setPw(mservice.sha512(loginPw));
 		mem.setNickname(nickname);
 
+		dao.RegistMember(mem);
 			
 		return "Home/index";
 	}
