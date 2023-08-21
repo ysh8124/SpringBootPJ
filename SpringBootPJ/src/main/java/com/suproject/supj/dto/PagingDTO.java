@@ -11,88 +11,88 @@ public class PagingDTO {
 			startPage=1;
 		}
 		public PagingDTO(int total, int nowPage, int cntPerPage,String kind, String need) {
-			SetNowPage(nowPage);
-			SetCntPerPage(cntPerPage);
-			SetTotal(total);
-			CalcLastPage(GetTotal(), GetCntPerPage());
-			CalcStartEndPage(GetNowPage(), cntPage);
-			CalcStartEnd(GetNowPage(), GetCntPerPage());
+			setNowPage(nowPage);
+			setCntPerPage(cntPerPage);
+			setTotal(total);
+			CalcLastPage(getTotal(), getCntPerPage());
+			CalcStartEndPage(getNowPage(), cntPage);
+			CalcStartEnd(getNowPage(), getCntPerPage());
 			setKind(kind);
 			setNeed(need);
 		}
 		// 제일 마지막 페이지 계산
 		public void CalcLastPage(int total, int cntPerPage) {
-			SetLastPage((int) Math.ceil((double)total / (double)cntPerPage));
+			setLastPage((int) Math.ceil((double)total / (double)cntPerPage));
 		}
 		// 시작, 끝 페이지 계산
 		public void CalcStartEndPage(int nowPage, int cntPage) {
-			SetEndPage(((int)Math.ceil((double)nowPage / (double)cntPage)) * cntPage);
-			if (GetLastPage() < GetEndPage()) {
-				SetEndPage(GetLastPage());
+			setEndPage(((int)Math.ceil((double)nowPage / (double)cntPage)) * cntPage);
+			if (getLastPage() < getEndPage()) {
+				setEndPage(getLastPage());
 			}
-			SetStartPage(GetEndPage() - cntPage + 1);
-			if (GetStartPage() < 1) {
-				SetStartPage(1);
+			setStartPage(getEndPage() - cntPage + 1);
+			if (getStartPage() < 1) {
+				setStartPage(1);
 			}
 		}
 		// DB 쿼리에서 사용할 start, end값 계산
 		public void CalcStartEnd(int nowPage, int cntPerPage) {
-			SetEnd(nowPage * cntPerPage);
-			SetStart(GetEnd() - cntPerPage + 1);
+			setEnd(nowPage * cntPerPage);
+			setStart(getEnd() - cntPerPage + 1);
 		}
 		
-		public int GetNowPage() {
+		public int getNowPage() {
 			return nowPage;
 		}
-		public void SetNowPage(int nowPage) {
+		public void setNowPage(int nowPage) {
 			this.nowPage = nowPage;
 		}
-		public int GetStartPage() {
+		public int getStartPage() {
 			return startPage;
 		}
-		public void SetStartPage(int startPage) {
+		public void setStartPage(int startPage) {
 			this.startPage = startPage;
 		}
-		public int GetEndPage() {
+		public int getEndPage() {
 			return endPage;
 		}
-		public void SetEndPage(int endPage) {
+		public void setEndPage(int endPage) {
 			this.endPage = endPage;
 		}
-		public int GetTotal() {
+		public int getTotal() {
 			return total;
 		}
-		public void SetTotal(int total) {
+		public void setTotal(int total) {
 			this.total = total;
 		}
-		public int GetCntPerPage() {
+		public int getCntPerPage() {
 			return cntPerPage;
 		}
-		public void SetCntPerPage(int cntPerPage) {
+		public void setCntPerPage(int cntPerPage) {
 			this.cntPerPage = cntPerPage;
 		}
-		public int GetLastPage() {
+		public int getLastPage() {
 			return lastPage;
 		}
-		public void SetLastPage(int lastPage) {
+		public void setLastPage(int lastPage) {
 			this.lastPage = lastPage;
 		}
-		public int GetStart() {
+		public int getStart() {
 			return start;
 		}
-		public void SetStart(int start) {
+		public void setStart(int start) {
 			this.start = start;
 		}
-		public int GetEnd() {
+		public int getEnd() {
 			return end;
 		}
-		public void SetEnd(int end) {
+		public void setEnd(int end) {
 			this.end = end;
 		}	
-		public int SetCntPage() {
+		public int setCntPage() {
 			return cntPage;
 		}
-		public void GetCntPage(int cntPage) {
+		public void getCntPage(int cntPage) {
 			this.cntPage = cntPage;
 		}
 		@Override
