@@ -4,8 +4,7 @@ public class PagingDTO {
 	// 현재페이지, 시작페이지, 끝페이지, 게시글 총 갯수, 페이지당 글 갯수, 마지막페이지, SQL쿼리에 쓸 start, end
 		private int nowPage, startPage, endPage, total, cntPerPage, lastPage, start, end;
 		private int cntPage = 5;
-		private String kind = "";
-		private String need = "";
+		private String kind, need;
 		
 		
 		public PagingDTO() {
@@ -18,8 +17,8 @@ public class PagingDTO {
 			CalcLastPage(GetTotal(), GetCntPerPage());
 			CalcStartEndPage(GetNowPage(), cntPage);
 			CalcStartEnd(GetNowPage(), GetCntPerPage());
-			SetKind(kind);
-			SetNeed(need);
+			setKind(kind);
+			setNeed(need);
 		}
 		// 제일 마지막 페이지 계산
 		public void CalcLastPage(int total, int cntPerPage) {
@@ -102,18 +101,19 @@ public class PagingDTO {
 					+ ", cntPerPage=" + cntPerPage + ", lastPage=" + lastPage + ", start=" + start + ", end=" + end
 					+ ", cntPage=" + cntPage + "]";
 		}
-		public String GetKind() {
+		public String getKind() {
 			return kind;
 		}
-		public void SetKind(String kind) {
+		public void setKind(String kind) {
 			this.kind = kind;
 		}
-		public String GetNeed() {
+		public String getNeed() {
 			return need;
 		}
-		public void SetNeed(String need) {
+		public void setNeed(String need) {
 			this.need = need;
 		}
+
 
 
 }
