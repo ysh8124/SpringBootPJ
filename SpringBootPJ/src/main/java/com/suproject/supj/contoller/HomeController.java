@@ -125,8 +125,8 @@ public class HomeController {
 		model.addAttribute("paging", paging);
 		List<PostDTO> list = dao.SelectPost(paging);
 		model.addAttribute("list",list);
-		
-		if(session.getAttribute("id") == null) {return "Home/Login";}
+
+		if(session.getAttribute("id") == null) {return "Home/login";}
 		return "Home/board";
 	}
 	
