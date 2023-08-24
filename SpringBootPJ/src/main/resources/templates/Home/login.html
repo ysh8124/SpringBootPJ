@@ -161,7 +161,8 @@ $(function(){
 		        , data:{"id": $("#id_val").val(),
 		        		"pw": $("#password").val()}
 		        , success: function(data) {
-		        	if(data == true && $("#id_val").val() != ''){
+		        	
+		        	if(data == true){
 		        		alert("로그인 성공!"); 	
 		        		location.href = "goBoard";
 		        	}
