@@ -84,17 +84,18 @@ public class HomeController {
 	
 	@PostMapping("doLogin")
 	@ResponseBody
-	public boolean DoLogin(Model model,String id,String pw) {
+	public Boolean DoLogin(Model model,String id,String pw) {
 		Map<String,String> param = new HashMap<>();
 		String pw2 = mservice.sha512(pw);
 		
 		param.put("id",id);
 		param.put("pw",pw2);
+		
 		boolean check = dao.DoLogin(param);
+
+		if(check) {session.setAttribute("id", id); return true;}
 		
-		if(check == true) {session.setAttribute("id", id);}
-		
-		return check;
+		return false;
 	}
 	
 	@GetMapping("goBoard")
@@ -193,7 +194,7 @@ public class HomeController {
 
 		session.invalidate();
 		
-		return "Home/index";
+		return "redirect:/";
 	}
 	
 }

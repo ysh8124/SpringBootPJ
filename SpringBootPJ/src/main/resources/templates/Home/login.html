@@ -136,7 +136,7 @@ body {
 <body>
 	<div class="container">
 		<div id="box">
-		<form action=login id="loginForm" method="POST" class="loginForm">
+		<form action=login id="loginForm" method="POST" class="loginForm" onsubmit="return false">
                                                                                                
       <h2>로그인</h2>
       <div class="textForm">
@@ -145,35 +145,34 @@ body {
       <div class="textForm">
         <input name="loginPw" type="password" class="pw" id="password" placeholder="비밀번호">
       </div>
-      <input type="submit" class="btn" value="L O G I N" id="login"/>
+      <input type="submit" class="btn" value="L O G I N" id="login" onkeyup="if(window.event.keyCode==13){loginEvent()}" onclick="loginEvent()"/>
       <input type="button" class="btn" value="S I G N U P" id="signup" onclick="location.href='register';">
     </form>
 		</div>
 	</div>
 
 <script>
-$(function(){
 
-	$("#login").click(function(){
-		  $.ajax({
+
+	function loginEvent(){
+		  
+$.ajax({
 		          type: 'post'
 		        , url: '/doLogin'
 		        , data:{"id": $("#id_val").val(),
 		        		"pw": $("#password").val()}
 		        , success: function(data) {
-		        	
-		        	if(data == true){
-		        		alert("로그인 성공!"); 	
-		        		location.href = "goBoard";
+		        	if(data){
+		        		alert("로그인에 성공하였습니다."); 	
+		        		location.href = "goBoard";	
 		        	}
-		        	else{alert("아이디 또는 패스워드를 확인해주세요.");}
+		        	else{alert("아이디 또는 패스워드를 확인해주세요."); return false;}
 		          },error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
 							alert("아이디 또는 패스워드를 확인해주세요.");
 		        	  }
 		  });	
-	});
+	}
 
-})
 </script>
 
 </body>
